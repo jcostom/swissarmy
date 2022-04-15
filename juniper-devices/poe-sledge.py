@@ -42,9 +42,9 @@ args = parser.parse_args()
 
 
 def main():
-    disableCommand = "set poe interface all disable"
-    disableComment = "drop the PoE sledgehammer on all ports"
-    rollbackComment = "rollback - restoring PoE"
+    disable_command = "set poe interface all disable"
+    disable_comment = "drop the PoE sledgehammer on all ports"
+    rollback_comment = "rollback - restoring PoE"
 
     dev = Device(host=args.switch, user=args.user, password=args.password)
     logger.error(f"Connecting to: {args.switch}")
@@ -53,11 +53,11 @@ def main():
     logger.error(f"Locking the configuration on: {args.switch}")
     dev.cu.lock()
     logger.error(f"Now shutting down PoE on all ports: {args.port}")
-    dev.cu.load(disableCommand, format='set')
-    dev.cu.commit(comment=disableComment, timeout=180)
+    dev.cu.load(disable_command, format='set')
+    dev.cu.commit(comment=disable_comment, timeout=180)
     logger.error(f"Now executing rollback on: {args.switch}")
     dev.cu.rollback(rb_id=1)
-    dev.cu.commit(comment=rollbackComment, timeout=180)
+    dev.cu.commit(comment=rollback_comment, timeout=180)
     logger.error(f"Unlocking the configuration on: {args.switch}")
     dev.cu.unlock()
     dev.close()

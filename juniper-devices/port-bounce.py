@@ -48,13 +48,13 @@ args = parser.parse_args()
 
 
 def main():
-    disableCommand = " ".join(
+    disable_command = " ".join(
         ["set interfaces", args.port, "disable"]
     )
-    disableComment = " ".join(
+    disable_comment = " ".join(
         ["shut port", args.port]
     )
-    rollbackComment = " ".join(
+    rollback_comment = " ".join(
         ["rollback shut of port", args.port]
     )
 
@@ -65,11 +65,11 @@ def main():
     logger.error(f"Locking the configuration on: {args.sys}")
     dev.cu.lock()
     logger.error(f"Now shutting port: {args.port}")
-    dev.cu.load(disableCommand, format='set')
-    dev.cu.commit(comment=disableComment, timeout=180)
+    dev.cu.load(disable_command, format='set')
+    dev.cu.commit(comment=disable_comment, timeout=180)
     logger.error(f"Now executing rollback on: {args.sys}")
     dev.cu.rollback(rb_id=1)
-    dev.cu.commit(comment=rollbackComment, timeout=180)
+    dev.cu.commit(comment=rollback_comment, timeout=180)
     logger.error(f"Unlocking the configuration on: {args.sys}")
     dev.cu.unlock()
     dev.close()

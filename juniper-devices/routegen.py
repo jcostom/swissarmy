@@ -37,7 +37,8 @@ def main():
         elif args.rtr == 'cisco':
             print(f"ip route {ip} 255.255.255.255 {args.gw}")
         else:
-            pass
+            print(f"Invalid Router type selected: {args.rtr}.")
+            break
 
 
 if __name__ == "__main__":
