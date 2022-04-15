@@ -1,13 +1,6 @@
 #!/usr/bin/env python3
 
 """
-Long ago, when I had less gray hair, we did an MX POC
-and I was called upon to write a Perl script to create
-thousands of random /32 routes to load into a router as
-a weird test case someone came up with. Well, that code
-grew old & ugly. So, I remade it, newer and prettier,
-and in Python.
-
 All of these routes will be generated in 10/8 with
 (by default) a gateway of 10.255.255.254.
 

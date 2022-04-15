@@ -6,6 +6,7 @@ want to, or just plain can't walk up to the system
 and pull a cable out? Don't feel like doing the
 disable/commit/enable/commit dance manually?
 This does the work for you.
+
 Yes, you could also drop to a root shell and
 use ifconfig, but JTAC doesn't exactly look
 fondly on that. So don't do that. Plus, "unexpected"
