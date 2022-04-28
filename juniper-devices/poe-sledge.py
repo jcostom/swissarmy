@@ -52,7 +52,7 @@ def main():
     dev.bind(cu=Config)
     logger.error(f"Locking the configuration on: {args.switch}")
     dev.cu.lock()
-    logger.error(f"Now shutting down PoE on all ports.")
+    logger.error("Now shutting down PoE on all ports.")
     dev.cu.load(disable_command, format='set')
     dev.cu.commit(comment=disable_comment, timeout=180)
     logger.error(f"Now executing rollback on: {args.switch}")
