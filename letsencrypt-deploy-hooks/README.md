@@ -4,8 +4,9 @@ Deploy Hooks are super useful. These are scripts that execute upon successful re
 
 Get `certbot` installed on your system using their directions. That's outside the scope of what I'm doing here. For me, I did it using the `snap` packages on Ubuntu 20.04 and 22.04 hosts. It was super easy.
 
-Now mind you, I'm using these scripts for use cases where I'm using the `certbot certonly` type syntax, where I'm only generating certs, not using `certbot`'s installation capabilities. So, that's why these scripts make sense. I've got 4 different use cases here that I'm leveraging.
+Now mind you, I'm using these scripts for use cases where I'm using the `certbot certonly` type syntax, where I'm only generating certs, not using `certbot`'s installation capabilities. So, that's why these scripts make sense. I've got 5 different use cases here that I'm leveraging.
 
+1. `edgeos-renew.py` - Installs the cert on a Ubiquiti EdgeRouter.
 1. `hpm479-cert.sh` - Installs the cert on an HP Color LaserJet Pro M479 series printer
 1. `plex-cert.sh` - Installs the cert in a Docker container for the Plex Media Server
 1. `unbound-cert.sh` - Restarts the Unbound DNS service after the certs update
