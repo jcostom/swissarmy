@@ -7,18 +7,29 @@ from paramiko import AuthenticationException, SSHClient, AutoAddPolicy, SSHExcep
 from scp import SCPClient
 
 # set to keyfile or password
-AUTH_METHOD = 'password'
+SSH_AUTH_METHOD = 'password'
+
+# You'll always need these.
+DEVICE = 'my-router-hostname'
 AUTH_USER = 'my-username'
 AUTH_PASSWORD = 'my-password'
+
+# if you set SSH_AUTH_METHOD to keyfile, you'll need these too
+# it's the path to the public key you're using, and its passphrase, if any
 AUTH_KEYFILE = ''
 AUTH_PASSPHRASE = ''
-DEVICE = 'my-router-hostname'
+
+# file names/locations
 KNOWN_HOSTS = '/var/tmp/letsedgeos'
 CERT_DIR = '/config/auth'
 CERT_FILE = f'{CERT_DIR}/lets.pem'
-RESTART_COMMAND = 'systemctl restart lighttpd'
-BACKUP_COMMAND = f'cp {CERT_FILE} {CERT_FILE}.backup'
 LE_DIR = '/etc/letsencrypt/live'
+
+# commands script executes over the SSH channel
+BACKUP_COMMAND = f'cp {CERT_FILE} {CERT_FILE}.backup'
+RESTART_COMMAND = 'systemctl restart lighttpd'
+
+# Something wrong? Set to 1 and check out what's up.
 DEBUG = 0
 
 # Setup logger
@@ -62,7 +73,7 @@ def main() -> None:
         sshclient.load_system_host_keys()
         sshclient.load_host_keys(KNOWN_HOSTS)
         sshclient.set_missing_host_key_policy(AutoAddPolicy())
-        if AUTH_METHOD == 'password':
+        if SSH_AUTH_METHOD == 'password':
             sshclient.connect(DEVICE, username=AUTH_USER, password=AUTH_PASSWORD)  # noqa: E501
         else:
             sshclient.connect(DEVICE, username=AUTH_USER, key_filename=AUTH_KEYFILE, passphrase=AUTH_PASSPHRASE)  # noqa: E501
