@@ -9,13 +9,15 @@ from scp import SCPClient
 # set to keyfile or password
 SSH_AUTH_METHOD = 'password'
 
-# You'll always need these.
+# you'll always need these.
+# Yes, even if you're authenticating via an ssh keypair, you still need the
+# password. Why? The restart command needs to run via sudo.
 DEVICE = 'my-router-hostname'
 AUTH_USER = 'my-username'
 AUTH_PASSWORD = 'my-password'
 
-# if you set SSH_AUTH_METHOD to keyfile, you'll need these too
-# it's the path to the public key you're using, and its passphrase, if any
+# If you set SSH_AUTH_METHOD to keyfile, you'll need these too.
+# It's the path to the public key you're using, and its passphrase, if any.
 AUTH_KEYFILE = ''
 AUTH_PASSPHRASE = ''
 
