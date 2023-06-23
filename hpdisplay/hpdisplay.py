@@ -7,7 +7,17 @@
 # as I can tell, it should.
 
 import argparse
+import logging
 import socket
+
+# Setup logger
+logger = logging.getLogger()
+ch = logging.StreamHandler()
+logger.setLevel(logging.INFO)
+ch.setLevel(logging.INFO)
+formatter = logging.Formatter('[%(asctime)s] %(message)s')
+ch.setFormatter(formatter)
+logger.addHandler(ch)
 
 parser = argparse.ArgumentParser(
     description='HP JetDirect Status Message Change Utility'
@@ -27,7 +37,7 @@ command = f'''{ESC}%-12345X@PJL JOB
 
 
 def main() -> None:
-    print(f'Changing status message on printer {args.ip} to "{args.message}"!')
+    logger.info(f'Changing status message on printer {args.ip} to "{args.message}"!')  # noqa E501
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((args.ip, 9100))
         s.sendall(command.encode('utf-8'))
