@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 
 """
-We had a customer that needed to find the HW Revisions
-for all of their EX switches. This might not be the most
-attractive output, but it's pretty reliable. Warning, it
-doesn't do a lot of error checking when it connects to
-switches, so if soemthing's gone wrong like bad auth
-credentials, it will just throw an exception and quit.
+Need to track down the HW revisions of a bunch of EX
+switches all at once? This is the place to be.
+
+Run this as:
+./exrev.py --config myconfig-file.json \
+    --user myuser --password mypassword
+
+Optionally, if you're authenticating via SSH key,
+you can leave out the password. If your current username
+is the same locally as well as on the switches, you can
+leave that out as well!
 
 The only non-default module here is PyEZ. Installation
 directions for the module found here:
@@ -16,6 +21,7 @@ https://github.com/Juniper/py-junos-eznc
 import argparse
 import json
 import logging
+import os
 import re
 from jnpr.junos import Device
 
@@ -32,7 +38,15 @@ logger.addHandler(ch)
 parser = argparse.ArgumentParser(
     description='Find Juniper Switch HW Revisions'
 )
-parser.add_argument('--config', action="store", default='./config.json', help="Defaults to ./config.json")  # noqa E501
+parser.add_argument('--config', action="store",
+                    default='./config.json',
+                    help="Defaults to ./config.json")
+parser.add_argument('--user', action="store",
+                    default=os.getenv('USER'),
+                    help="Will default to your current username.")
+parser.add_argument('--password',
+                    action="store",
+                    help="Omit this option if you're using ssh keys to authenticate")  # noqa E501
 args = parser.parse_args()
 
 # Read in configuration
@@ -41,7 +55,7 @@ with open(args.config, 'r') as f:
 
 for switch in myconfig['switches']:
     logger.error(f'Switch: {switch}')
-    with Device(host=switch, user=myconfig['config']['username'], password=myconfig['config']['password']) as jdev:  # noqa E501
+    with Device(host=switch, user=args.user, password=args.password) as jdev:
         res = jdev.cli('show chassis hardware', warning='False')
         members = re.findall(r'^FPC.*', res, re.MULTILINE)
         for member in members:
