@@ -1,0 +1,11 @@
+{
+    "config": {
+        "username": "user",
+        "password": "password"
+    },
+    "switches": [
+        "switch1",
+        "switch2",
+        "switch3"
+    ]
+}
