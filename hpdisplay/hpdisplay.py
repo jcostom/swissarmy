@@ -11,13 +11,10 @@ import logging
 import socket
 
 # Setup logger
+LOG_LEVEL = 'INFO'
+logging.basicConfig(level=LOG_LEVEL,
+                    format='[%(asctime)s] %(message)s')
 logger = logging.getLogger()
-ch = logging.StreamHandler()
-logger.setLevel(logging.INFO)
-ch.setLevel(logging.INFO)
-formatter = logging.Formatter('[%(asctime)s] %(message)s')
-ch.setFormatter(formatter)
-logger.addHandler(ch)
 
 parser = argparse.ArgumentParser(
     description='HP JetDirect Status Message Change Utility'

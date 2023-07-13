@@ -26,13 +26,10 @@ import re
 from jnpr.junos import Device
 
 # Setup logger
+LOG_LEVEL = 'ERROR'
+logging.basicConfig(level=LOG_LEVEL,
+                    format='[%(asctime)s] %(message)s')
 logger = logging.getLogger()
-ch = logging.StreamHandler()
-logger.setLevel(logging.ERROR)
-ch.setLevel(logging.ERROR)
-formatter = logging.Formatter('[%(asctime)s] %(message)s')
-ch.setFormatter(formatter)
-logger.addHandler(ch)
 
 # Setup CLI options
 parser = argparse.ArgumentParser(
