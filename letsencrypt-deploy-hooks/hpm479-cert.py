@@ -27,8 +27,8 @@ logging.basicConfig(level=LOG_LEVEL,
 logger = logging.getLogger()
 
 # Read cert and private key
-cert_pem = f'{LE_DIR}/cert.pem'
-privkey_pem = f'{LE_DIR}/privkey.pem'
+cert_pem = f'{LE_DIR}/{DEVICE}/cert.pem'
+privkey_pem = f'{LE_DIR}/{DEVICE}/privkey.pem'
 
 with open(cert_pem, 'rb') as f:
     cert = OpenSSL.crypto.load_certificate(OpenSSL.crypto.FILETYPE_PEM, f.read())  # noqa E501
