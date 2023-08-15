@@ -4,6 +4,7 @@ import logging
 import os
 import requests
 import tempfile
+import urllib3
 import OpenSSL
 
 # Ordinarily set this to 0. Change to 1 if you've got trouble.
@@ -25,6 +26,13 @@ logging.basicConfig(level=LOG_LEVEL,
                     format='[%(levelname)s] %(asctime)s %(message)s',
                     datefmt='[%d %b %Y %H:%M:%S %Z]')
 logger = logging.getLogger()
+
+# Let's prevent warnings for letsencrypt certs...
+# Certbot will show these as errors
+# The actual push succeeded without this because of the
+# verify=False knob being set, but let's keep it nice
+# looking.
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)  # noqa E501
 
 # Read cert and private key
 cert_pem = f'{LE_DIR}/{DEVICE}/cert.pem'
