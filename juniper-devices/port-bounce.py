@@ -45,15 +45,9 @@ args = parser.parse_args()
 
 
 def main():
-    disable_command = " ".join(
-        ["set interfaces", args.port, "disable"]
-    )
-    disable_comment = " ".join(
-        ["shut port", args.port]
-    )
-    rollback_comment = " ".join(
-        ["rollback shut of port", args.port]
-    )
+    disable_command = f"set interfaces {args.port} disable"
+    disable_comment = f"shut port {args.port}"
+    rollback_comment = f"rollback shut of port {args.port}"
 
     dev = Device(host=args.sys, user=args.user, password=args.password)
     logger.error(f"Connecting to: {args.sys}")
